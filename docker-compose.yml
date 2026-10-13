@@ -1,0 +1,17 @@
+version: "3"
+services:
+  lab:
+    image: jupyter_andes:v02 
+    container_name: andes_container2 
+    build:
+        context: .
+        dockerfile: ./.devcontainer/Dockerfile
+
+    ports:
+      - "8800:8888" # http://localhost:8800/lab to launch Jupyter Lab
+
+    volumes:
+      - .:/home/jovyan/work
+
+    working_dir: /home/jovyan/work
+    command: sh -c 'test -f main.ipynb || jupytext --to ipynb main.jl; exec start.sh jupyter lab'
